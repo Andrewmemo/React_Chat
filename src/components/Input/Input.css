@@ -27,3 +27,10 @@ select:focus {
   border: none;
   width: 20%;
 }
+
+.fa-paperclip {
+  font-size: 3em;
+  margin: auto;
+  color: #2979ff;
+  padding: 16px;
+}
