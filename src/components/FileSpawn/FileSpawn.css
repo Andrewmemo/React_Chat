@@ -1,0 +1,17 @@
+.innerFileContainer {
+  bottom: 10%;
+  right: 0;
+}
+
+.fileName {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.9em;
+}
+
+.fileMark {
+  color: #2979ff;
+  font-size: 1.1em;
+  padding: 0 0.3em;
+}
