@@ -51,7 +51,11 @@ class Input extends Component {
                 this.props.setMessageType("file");
                 this.props.setFileName(data.get("file").name);
 
-                await axios.post("http://localhost:5000/upload", data, {});
+                await axios.post(
+                  "https://chat-mix-server-test.herokuapp.com/upload",
+                  data,
+                  {}
+                );
                 this.props.sendFile(e);
                 data.delete("file");
                 this.props.setMessageType("text");
