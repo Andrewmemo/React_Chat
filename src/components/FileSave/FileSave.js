@@ -37,7 +37,7 @@ const FileSave = ({ message: { text, user }, name }) => {
     <div className="messageContainer justifyEnd">
       <p className="sentText pr-10">{trimmedName}</p>
       <div className="messageBox backgroundBlue">
-        <a href={`https://chat-mix-server-test.herokuapp.com/upload/${text}`}>
+        <a href={`https://chat-mix-test-server.herokuapp.com/upload/${text}`}>
           <nobr>
             <p className="messageText colorWhite">
               {" "}
@@ -51,7 +51,7 @@ const FileSave = ({ message: { text, user }, name }) => {
   ) : (
     <div className="messageContainer justifyStart">
       <div className="messageBox backgroundLight">
-        <a href={`https://chat-mix-server-test.herokuapp.com/upload/${text}`}>
+        <a href={`https://chat-mix-test-server.herokuapp.com/upload/${text}`}>
           <nobr>
             <p className="messageText colorDark">
               {" "}

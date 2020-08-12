@@ -52,7 +52,7 @@ class Input extends Component {
                 this.props.setFileName(data.get("file").name);
 
                 await axios.post(
-                  "https://chat-mix-server-test.herokuapp.com/upload",
+                  "https://chat-mix-test-server.herokuapp.com/upload",
                   data,
                   {}
                 );
