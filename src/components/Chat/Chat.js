@@ -13,24 +13,29 @@ let socket;
 
 const Chat = ({ location }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loaded, setLoaded] = useState(0);
   const [messageType, setMessageType] = useState("text");
   const [fileName, setFileName] = useState("");
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
+  const [m, setM] = useState("");
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const ENDPOINT = "https://chat-mix-test-server.herokuapp.com/";
 
   useEffect(() => {
-    const { name, room } = queryString.parse(location.search);
+    const { name, room, m } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
 
     setRoom(room);
     setName(name);
+    if (m) {
+      setM(m);
+    }
 
-    socket.emit("join", { name, room }, (error) => {
+    socket.emit("join", { name, room, m }, (error) => {
       if (error) {
         alert(error);
       }
@@ -73,6 +78,9 @@ const Chat = ({ location }) => {
       socket.emit("sendMessage", { message, messageType }, () => {
         setMessage("");
       });
+
+      let audio = document.getElementById("audio");
+      audio.play();
     }
   };
 
@@ -91,11 +99,15 @@ const Chat = ({ location }) => {
       <div className="container">
         <InfoBar room={room} />
         <Messages messages={messages} name={name} />
+
         {selectedFile && (
-          <FileSpawn
-            selectedFile={selectedFile}
-            setSelectedFile={setSelectedFile}
-          />
+          <React.Fragment>
+            <FileSpawn
+              selectedFile={selectedFile}
+              setSelectedFile={setSelectedFile}
+              loaded={loaded}
+            />
+          </React.Fragment>
         )}
         <Input
           message={message}
@@ -106,11 +118,16 @@ const Chat = ({ location }) => {
           sendMessage={sendMessage}
           selectedFile={selectedFile}
           setSelectedFile={setSelectedFile}
+          loaded={loaded}
+          setLoaded={setLoaded}
           messageType={messageType}
           setMessageType={setMessageType}
         />
       </div>
       <TextContainer users={users} />
+      <audio id="audio" src="https://fikustest.000webhostapp.com/audio.mp3">
+        Your browser does not support the <code>audio</code> element.
+      </audio>
     </div>
   );
 };

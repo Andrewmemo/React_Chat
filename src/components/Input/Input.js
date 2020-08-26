@@ -54,7 +54,13 @@ class Input extends Component {
                 await axios.post(
                   "https://chat-mix-test-server.herokuapp.com/upload",
                   data,
-                  {}
+                  {
+                    onUploadProgress: (ProgressEvent) => {
+                      this.props.setLoaded(
+                        (ProgressEvent.loaded / ProgressEvent.total) * 100
+                      );
+                    },
+                  }
                 );
                 this.props.sendFile(e);
                 data.delete("file");
@@ -66,7 +72,10 @@ class Input extends Component {
                 inputs.type = "text";
                 inputs.type = "file";
               }
+              let audio = document.getElementById("audio");
+              audio.play();
               this.props.setSelectedFile(null);
+              this.props.setLoaded(0);
             } else {
               this.props.setMessageType("text");
             }

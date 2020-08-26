@@ -10,7 +10,6 @@ const FileSave = ({ message: { text, user }, name }) => {
       0,
       fileName.length - temp[temp.length - 1].length - 1
     );
-    console.log("tempFileName", tempFileName);
 
     let newFileName;
 
