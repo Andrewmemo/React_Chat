@@ -18,14 +18,16 @@ const Chat = ({ location }) => {
   const [fileName, setFileName] = useState("");
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
+  const [key, setKey] = useState("");
   const [m, setM] = useState("");
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const ENDPOINT = "https://chat-mix-test-server.herokuapp.com/";
+
+  const ENDPOINT = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    const { name, room, m } = queryString.parse(location.search);
+    const { name, room, key, m } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
 
@@ -42,6 +44,7 @@ const Chat = ({ location }) => {
     });
 
     socket.on("display-chat", (messages) => {
+      console.log("display-chat");
       setMessages([]);
       for (let i = 0; i < messages.length; i++) {
         let { name, text, messageType } = messages[i];
@@ -73,7 +76,6 @@ const Chat = ({ location }) => {
 
   const sendMessage = (event) => {
     event.preventDefault();
-
     if (message) {
       socket.emit("sendMessage", { message, messageType }, () => {
         setMessage("");
@@ -93,7 +95,6 @@ const Chat = ({ location }) => {
       });
     }
   };
-
   return (
     <div className="outerContainer">
       <div className="container">

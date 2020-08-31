@@ -17,5 +17,9 @@
 }
 
 .form-group {
-  margin-right: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 10px;
+  visibility: hidden;
 }

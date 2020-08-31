@@ -1,3 +1,9 @@
+fa,
+.fas,
+.far {
+  font-family: FontAwesome !important;
+}
+
 .form {
   display: flex;
   border-top: 2px solid #d3d3d3;
@@ -6,7 +12,7 @@
 .input {
   border: none;
   border-radius: 0;
-  padding: 5%;
+  padding: 20px;
   width: 80%;
   font-size: 1.2em;
 }
@@ -17,20 +23,15 @@ select:focus {
   outline: none;
 }
 
-.sendButton {
-  color: #fff !important;
-  text-transform: uppercase;
-  text-decoration: none;
-  background: #2979ff;
-  padding: 20px;
-  display: inline-block;
-  border: none;
-  width: 20%;
+.fa-paper-plane {
+  font-size: 1.5em;
+  margin: auto 20px auto 10px;
+
+  color: #2979ff;
 }
 
 .fa-paperclip {
-  font-size: 3em;
-  margin: auto;
+  font-size: 2em;
+  margin: auto 10px auto auto;
   color: #2979ff;
-  padding: 16px;
 }

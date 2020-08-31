@@ -1,7 +1,7 @@
 .messageBox {
   background: #f3f3f3;
-  border-radius: 20px;
-  padding: 5px 20px;
+  border-radius: 15px;
+  padding: 5px 10px;
   /* color: white; */
   display: inline-block;
   max-width: 80%;
@@ -11,8 +11,10 @@
   width: 100%;
   letter-spacing: 0;
   float: left;
-  font-size: 1.1em;
+  font-size: 1em;
   word-wrap: break-word;
+  padding: 5px;
+  margin: 0px;
 }
 
 .messageText img {
@@ -27,11 +29,15 @@
 }
 
 .sentText {
+  padding-left: 0px;
   display: flex;
   align-items: center;
   font-family: Helvetica;
-  color: #828282;
+  color: #2979ff;
   letter-spacing: 0.3px;
+  font-weight: 600;
+  margin: 5px;
+  margin-bottom: 0px;
 }
 
 .pl-10 {

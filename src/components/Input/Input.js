@@ -3,9 +3,16 @@ import axios from "axios";
 
 import "./Input.css";
 
+var fileInLoadKey = false;
+let audio = new Audio("public/audio.mp3");
+
 class Input extends Component {
   onChangeHandler = (event) => {
-    this.props.setSelectedFile(event.target.files);
+    if (!fileInLoadKey) {
+      this.props.setSelectedFile(event.target.files);
+    } else {
+      alert("Дочекайся завантаження попереднього файлу");
+    }
   };
   render() {
     return (
@@ -34,38 +41,40 @@ class Input extends Component {
           }}
           className="fa fa-paperclip"
         ></i>
-        <button
+        <i
           style={{ cursor: "pointer" }}
           className="sendButton"
           onClick={async (e) => {
             this.props.sendMessage(e);
-            if (this.props.selectedFile) {
+            if (this.props.selectedFile && !fileInLoadKey) {
               const data = new FormData();
-              for (let i = 0; i < this.props.selectedFile.length; i++) {
-                const myNewFile = new File(
-                  [this.props.selectedFile[i]],
-                  Date.now() + "-" + this.props.selectedFile[i].name,
-                  { type: this.props.selectedFile[i].type }
-                );
-                data.append("file", myNewFile);
-                this.props.setMessageType("file");
-                this.props.setFileName(data.get("file").name);
+              const myNewFile = new File(
+                [this.props.selectedFile[0]],
+                Date.now() + "-" + this.props.selectedFile[0].name,
+                { type: this.props.selectedFile[0].type }
+              );
+              data.append("file", myNewFile);
 
-                await axios.post(
-                  "https://chat-mix-test-server.herokuapp.com/upload",
-                  data,
-                  {
-                    onUploadProgress: (ProgressEvent) => {
-                      this.props.setLoaded(
-                        (ProgressEvent.loaded / ProgressEvent.total) * 100
-                      );
-                    },
-                  }
-                );
-                this.props.sendFile(e);
-                data.delete("file");
-                this.props.setMessageType("text");
-              }
+              fileInLoadKey = true;
+              document.getElementById("cancelFileSelect").style.visibility =
+                "hidden";
+
+              document.getElementById(
+                "fileLoadingProgressBar"
+              ).style.visibility = "visible";
+              await axios.post(process.env.REACT_APP_API_URL + "upload", data, {
+                onUploadProgress: (ProgressEvent) => {
+                  this.props.setLoaded(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  );
+                },
+              });
+              fileInLoadKey = false;
+              this.props.setMessageType("file");
+              this.props.setFileName(data.get("file").name);
+              this.props.sendFile(e);
+              data.delete("file");
+              this.props.setMessageType("text");
               let inputs = document.querySelector(".inputFile");
               inputs.value = "";
               if (inputs.value) {
@@ -73,6 +82,7 @@ class Input extends Component {
                 inputs.type = "file";
               }
               let audio = document.getElementById("audio");
+              audio.load();
               audio.play();
               this.props.setSelectedFile(null);
               this.props.setLoaded(0);
@@ -80,9 +90,8 @@ class Input extends Component {
               this.props.setMessageType("text");
             }
           }}
-        >
-          Send
-        </button>
+          className="far fa-paper-plane"
+        ></i>
       </form>
     );
   }

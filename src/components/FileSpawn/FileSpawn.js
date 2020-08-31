@@ -21,18 +21,20 @@ const FileSpawn = ({ selectedFile, setSelectedFile, loaded }) => {
         <div className="innerFileContainer">
           {filesArray.map((f) => (
             <div key={f.lastModified} className="fileName">
-              <div className="form-group">
+              <p key={f.lastModified + new Date()}>{f.name}</p>
+              <div className="form-group" id="fileLoadingProgressBar">
                 <Progress max="100" color="success" value={loaded}>
                   {Math.round(loaded, 2)}%
                 </Progress>
               </div>
-              <p key={f.lastModified + new Date()}>{f.name}</p>
-              <i
-                id={f.lastModified}
-                onClick={onMarkClick}
-                style={{ cursor: "pointer" }}
-                className="fa fa-times fileMark"
-              ></i>
+              <div id="cancelFileSelect">
+                <i
+                  id={f.lastModified}
+                  onClick={onMarkClick}
+                  style={{ cursor: "pointer" }}
+                  className="fa fa-times fileMark"
+                ></i>
+              </div>
             </div>
           ))}
         </div>

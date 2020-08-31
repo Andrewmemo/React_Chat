@@ -26,7 +26,7 @@ const FileSave = ({ message: { text, user }, name }) => {
 
   let isSentByCurrentUser = false;
 
-  const trimmedName = name.trim().toLowerCase();
+  const trimmedName = name.trim();
 
   if (user === trimmedName) {
     isSentByCurrentUser = true;
@@ -34,9 +34,8 @@ const FileSave = ({ message: { text, user }, name }) => {
 
   return isSentByCurrentUser ? (
     <div className="messageContainer justifyEnd">
-      <p className="sentText pr-10">{trimmedName}</p>
       <div className="messageBox backgroundBlue">
-        <a href={`https://chat-mix-test-server.herokuapp.com/upload/${text}`}>
+        <a href={`${process.env.REACT_APP_API_URL}upload/${text}`}>
           <nobr>
             <p className="messageText colorWhite">
               {" "}
@@ -50,7 +49,8 @@ const FileSave = ({ message: { text, user }, name }) => {
   ) : (
     <div className="messageContainer justifyStart">
       <div className="messageBox backgroundLight">
-        <a href={`https://chat-mix-test-server.herokuapp.com/upload/${text}`}>
+        <p className="sentText">{user}</p>
+        <a href={`${process.env.REACT_APP_API_URL}upload/${text}`}>
           <nobr>
             <p className="messageText colorDark">
               {" "}
@@ -60,7 +60,6 @@ const FileSave = ({ message: { text, user }, name }) => {
           </nobr>
         </a>
       </div>
-      <p className="sentText pl-10 ">{user}</p>
     </div>
   );
 };
